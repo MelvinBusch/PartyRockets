@@ -1,2 +1,2 @@
-// Server Datei
-//# sourceMappingURL=server.js.map
+const express = require("express");
+const socket = require("socket.io");
