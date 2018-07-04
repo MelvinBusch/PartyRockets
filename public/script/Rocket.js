@@ -1,13 +1,13 @@
 // Rocket
 var Client;
 (function (Client) {
-    var Rocket = /** @class */ (function () {
-        function Rocket() {
+    class Rocket {
+        constructor() {
         }
-        Rocket.prototype.applyForce = function () { };
-        Rocket.prototype.update = function () { };
-        Rocket.prototype.show = function () { };
-        return Rocket;
-    }());
+        applyForce() { }
+        update() { }
+        show() { }
+    }
     Client.Rocket = Rocket;
 })(Client || (Client = {}));
+//# sourceMappingURL=Rocket.js.map
