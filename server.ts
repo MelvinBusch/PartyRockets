@@ -1,7 +1,18 @@
-import * as Http from "http";
-import * as Socket from "./node_modules/@types/socket.io";
+import SocketIO = require("socket.io");
+import Express = require("express");
 
-const server: Http.Server = Http.createServer(serverInit);
+// Setting up Express Server
+const app = Express();
+const server = app.listen(process.env.PORT || 3000, serverInit);
 
+app.use(Express.static("public"));
 
-function serverInit(): void { }
+function serverInit(): void {
+  console.log("Server is Listening");
+}
+
+// Socket Connection
+let socket = SocketIO(server);
+socket.on("connection", function(_socket) {
+  console.log("New Socket Connection " + _socket);
+});
