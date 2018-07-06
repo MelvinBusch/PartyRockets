@@ -1,10 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var io = require("socket.io-client");
+/// <reference path="../socket/socket.io-client.d.ts"/>
+const socket_io_client_1 = require("../socket/socket.io-client");
 // Connecting to Socket
-var socketAddress = "http://localhost:3000";
-var socket = io.connect(socketAddress);
+const socketAddress = "http://localhost:3000";
+const socket = socket_io_client_1.io.connect(socketAddress);
 window.addEventListener("load", init);
 function init() {
     console.info("Läuft!");
 }
+socket.on("connection", () => {
+    console.log("Hallooo?");
+});
+//# sourceMappingURL=main.js.map
