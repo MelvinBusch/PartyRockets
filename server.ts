@@ -1,5 +1,6 @@
-import SocketIO = require("socket.io");
-import Express = require("express");
+import * as Express from "express";
+import * as SocketIO from "socket.io";
+
 
 // Setting up Express Server
 const app = Express();

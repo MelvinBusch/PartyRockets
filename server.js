@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const SocketIO = require("socket.io");
 const Express = require("express");
+const SocketIO = require("socket.io");
 // Setting up Express Server
 const app = Express();
 const server = app.listen(process.env.PORT || 3000, serverInit);

@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-/// <reference path="../socket/socket.io-client.d.ts"/>
 const socket_io_client_1 = require("../socket/socket.io-client");
 // Connecting to Socket
 const socketAddress = "http://localhost:3000";
