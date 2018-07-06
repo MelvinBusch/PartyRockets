@@ -2,7 +2,7 @@
 // Project: http://socket.io/
 // Definitions by: PROGRE <https://github.com/progre/>
 // Definitions: https://github.com/borisyankov/DefinitelyTyped
-export declare var io: SocketIOClientStatic;
+declare var io: SocketIOClientStatic;
 
 declare module 'socket.io-client' {
   export = io;

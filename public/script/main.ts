@@ -1,9 +1,8 @@
-import { io } from "../socket/socket.io-client";
+///<reference path="../socket/socket.io-client.d.ts" />
 
 // Connecting to Socket
-
 const socketAddress: string = "http://localhost:3000";
-const socket = io.connect(socketAddress);
+const socket: SocketIOClient.Socket = io.connect(socketAddress);
 
 window.addEventListener("load", init);
 
