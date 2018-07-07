@@ -4,11 +4,31 @@
     <meta charset="utf-8">
     <title>PartyRockets</title>
     <link rel="stylesheet" href="style/style.css">
+    <script src="https://unpkg.com/ionicons@4.2.4/dist/ionicons.js"></script>
     <script src="socket/socket.io-client.js" charset="utf-8"></script>
+    <script src="script/classes/Room.js" charset="utf-8"></script>
+    <script src="script/animation.js" charset="utf-8"></script>
     <script src="script/main.js" charset="utf-8"></script>
   </head>
   <body>
-    <h1>PartyRockets</h1>
-    Das ist ein super tolles Party Spiel :D
+    <section id="startScreen">
+      <h1>PartyRockets</h1>
+      <h2>
+        A simple Party Game for small Groups!
+      </h2>
+      <button id="startBtn">Ready for Takeoff!</button>
+      <div class="footer">Made with <ion-icon name="heart"></ion-icon> by Melvin Busch</div>
+    </section>
+    <section id="invitationScreen">
+      <h2>Scanne den QR Code um dem Spiel beizutreten!</h2>
+      <div id="qrContainer"></div>
+      <div class="playerScreen">
+        <img src="img/icons/rocket-dark.png" alt="Rocket-Dark" class="mini-rocket">
+        <img src="img/icons/rocket-dark.png" alt="Rocket-Dark" class="mini-rocket">
+        <img src="img/icons/rocket-dark.png" alt="Rocket-Dark" class="mini-rocket">
+      </div>
+      <button id="launchBtn">Launch!</button>
+    </section>
+    <canvas id="canvas"></canvas>
   </body>
 </html>
