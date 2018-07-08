@@ -12,6 +12,9 @@ function serverInit() {
 // Socket Connection
 let socket = SocketIO(server);
 socket.on("connection", function (_socket) {
-    console.log("New Socket Connection " + _socket);
+    console.log("New Socket Connection");
+    _socket.on("newPlayer", _roomID => {
+        console.log(_roomID);
+    });
 });
 //# sourceMappingURL=server.js.map

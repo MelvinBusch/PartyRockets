@@ -28,12 +28,19 @@ section {
   top: 0;
   left: 0;
 }
+figure {
+  margin-top: 20px;
+  font-size: 12px;
+}
+a {
+  color: black;
+  text-decoration: underline;
+}
 button {
   padding: 20px;
   margin-top: 50px;
   font-family: 'Overpass Mono', monospace;
   font-size: 16px;
-  /* background: rgb(242, 242, 242); */
   background: white;
   border: 2px solid black;
   border-radius: 5px;
@@ -58,22 +65,24 @@ button:focus {
   transform: translateX(-50%);
 }
 
-/* Start Screen */
-#startScreen {
+/* Start Page */
+#startPage {
   background: rgb(51, 49, 45);
-  /* background: url("../img/main.jpg");
-  background-size: cover; */
   text-align: center;
   color: black;
-  transition: top 1000ms ease;
-  /* top: -100vh; */
+  transition: top 1.75s ease;
+  top: 0;
   z-index: 20;
+  display: none;
 }
 
 /* Invitation Screen */
 #invitationScreen {
   text-align: center;
   background: rgb(242, 242, 242);
+  position: relative;
+  top: 0;
+  display: none;
 }
 #invitationScreen .playerScreen {
   width: 200px;

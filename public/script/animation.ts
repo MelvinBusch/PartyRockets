@@ -4,6 +4,8 @@ let height: number;
 
 let staticBackground: ImageData;
 
+let rocket: Rocket;
+
 function setup(): void {
   let canvas: HTMLCanvasElement = <HTMLCanvasElement>document.getElementById("canvas");
   ctx = canvas.getContext("2d");
@@ -15,12 +17,27 @@ function setup(): void {
   canvas.height = height;
 
   ctx.strokeStyle = "none";
-  ctx.fillStyle = "rgb(35, 36, 38)"; //createGradient("rgb(10, 1, 58)", "rgb(60, 50, 130)", 0, height);
+  ctx.fillStyle = "rgb(35, 36, 38)";
   ctx.fillRect(0, 0, width, height);
+  staticBackground = ctx.getImageData(0, 0, width, height);
+
+  rocket = new Rocket(150, height * .85);
+
+  window.requestAnimationFrame(draw);
 }
 
 function draw(): void {
+  ctx.clearRect(0, 0, width, height);
+  // ctx.putImageData(staticBackground, 0, 0);
+  ctx.fillStyle = "rgb(35, 36, 38)";
+  ctx.fillRect(0, 0, width, height);
 
+
+  // Rakete
+  rocket.show();
+  rocket.update();
+
+  window.requestAnimationFrame(draw);
 }
 
 function createGradient(_c1: string, _c2: string, _from: number, _to: number) {
