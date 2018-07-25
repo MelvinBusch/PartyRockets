@@ -1,45 +1,33 @@
 class Room {
 
-  private roomID: string;
-  public roomURL: string;
-  private maxPlayers: number;
-  public players: number;
+  public id: string;
+  public url: string;
   private qrSize: number;
 
   constructor() {
-    this.roomID = this.generateRoomID();
-    this.roomURL = "http://localhost:3000?room=" + this.roomID;
-    this.maxPlayers = 3;
-    this.players = 0;
-    this.qrSize = 200;
-  }
-
-  public addPlayer(): void {
-    this.players++;
-    if (this.players > this.maxPlayers) {
-      this.players = this.maxPlayers;
-    }
-  }
-
-  public removePlayer(): void {
-    this.players--;
-    if (this.players < 0) {
-      this.players = 0;
-    }
+    this.id = this.generateRoomID();
+    // this.url = "http://localhost:3001?room=" + this.id;
+    this.url = "http://192.168.2.107:3001?room=" + this.id;
+    this.qrSize = 150;
   }
 
   private generateRoomID(): string {
     return "xxxxxxxx".replace(/[xy]/g, (_c: string) => {
-      let r: number = Math.random() * 16 | 0, v = _c == "x" ? r : (r & 0x3 | 0x8);
+      let r: number = Math.random() * 16 | 0, v: number = _c == "x" ? r : (r & 0x3 | 0x8);
       return v.toString(16);
     });
   }
 
-  public async generateQRCode(): Promise<void> {
-    const requestURL: string = `https://chart.googleapis.com/chart?cht=qr&chs=${this.qrSize}x${this.qrSize}&chl=${this.roomURL}&chld=H|2`;
+  public async fetchQRCode(): Promise<string> {
+    const requestURL: string = `https://chart.googleapis.com/chart?cht=qr&chs=${this.qrSize}x${this.qrSize}&chl=${this.url}&chld=Q|1`;
     let response: Response = await fetch(requestURL);
-    let imgURL: any = await response.url;
+    return await response.url;
+  }
 
-    return imgURL;
+  public data(): any {
+    return {
+      id: this.id,
+      url: this.url
+    }
   }
 }

@@ -8,23 +8,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 class Room {
     constructor() {
-        this.roomID = this.generateRoomID();
-        this.roomURL = "http://localhost:3000?room=" + this.roomID;
-        this.maxPlayers = 3;
-        this.players = 0;
-        this.qrSize = 200;
-    }
-    addPlayer() {
-        this.players++;
-        if (this.players > this.maxPlayers) {
-            this.players = this.maxPlayers;
-        }
-    }
-    removePlayer() {
-        this.players--;
-        if (this.players < 0) {
-            this.players = 0;
-        }
+        this.id = this.generateRoomID();
+        // this.url = "http://localhost:3001?room=" + this.id;
+        this.url = "http://192.168.2.107:3001?room=" + this.id;
+        this.qrSize = 150;
     }
     generateRoomID() {
         return "xxxxxxxx".replace(/[xy]/g, (_c) => {
@@ -32,13 +19,18 @@ class Room {
             return v.toString(16);
         });
     }
-    generateQRCode() {
+    fetchQRCode() {
         return __awaiter(this, void 0, void 0, function* () {
-            const requestURL = `https://chart.googleapis.com/chart?cht=qr&chs=${this.qrSize}x${this.qrSize}&chl=${this.roomURL}&chld=H|2`;
+            const requestURL = `https://chart.googleapis.com/chart?cht=qr&chs=${this.qrSize}x${this.qrSize}&chl=${this.url}&chld=Q|1`;
             let response = yield fetch(requestURL);
-            let imgURL = yield response.url;
-            return imgURL;
+            return yield response.url;
         });
+    }
+    data() {
+        return {
+            id: this.id,
+            url: this.url
+        };
     }
 }
 //# sourceMappingURL=Room.js.map

@@ -7,10 +7,11 @@
   padding: 0;
 }
 body {
-  height: 100vh;
+  height: auto;
   width: 100%;
   font-family: 'Overpass Mono', monospace;
   background: none;
+  overflow: hidden;
 }
 h1 {
   font-family: 'Fredoka One', cursive;
@@ -22,7 +23,6 @@ h2 {
 section {
   width: 100%;
   height: 100vh;
-  padding: 150px;
   box-sizing: border-box;
   position: absolute;
   top: 0;
@@ -41,7 +41,7 @@ button {
   margin-top: 50px;
   font-family: 'Overpass Mono', monospace;
   font-size: 16px;
-  background: white;
+  background: lightgray;
   border: 2px solid black;
   border-radius: 5px;
   cursor: pointer;
@@ -56,11 +56,16 @@ button:hover {
 button:focus {
   outline: none;
 }
+.error {
+  color: rgb(167, 49, 66);
+  display: none;
+}
 .footer {
+  width: 100%;
   font-size: 12px;
   color: gray;
   position: absolute;
-  bottom: 20px;
+  bottom: 2%;
   left: 50%;
   transform: translateX(-50%);
 }
@@ -71,32 +76,88 @@ button:focus {
   text-align: center;
   color: black;
   transition: top 1.75s ease;
+  position: absolute;
   top: 0;
   z-index: 20;
+  /* display: none; */
+}
+#startPage img {
+  max-width: 380px;
+  margin: 10% auto 50px auto;
+}
+#startPage h2 {
+  color: lightgray;
+}
+
+/* Join Room */
+#joinRoom {
+  text-align: center;
+  background: rgb(242, 242, 242);
+  position: absolute;
+  top: 0;
+  z-index: 10;
+  /* display: none; */
+}
+#joinRoom .content {
+  margin-top: 5%;
+}
+#joinRoom #qrLink {
+  margin-top: 10px;
+}
+#joinRoom #players {
+  width: 50%;
+  height: auto;
+  margin: 50px auto;
+  display: flex;
+  justify-content: space-around;
+}
+#joinRoom .player {
+  background: white;
+  padding: 20px;
+  box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+}
+#joinRoom .player figcaption {
+  margin-top: 10px;
+  font-size: 24px;
+}
+#joinRoom #launchBtn {
   display: none;
 }
 
-/* Invitation Screen */
-#invitationScreen {
+/* Wait Room */
+#waitRoom {
+  width: 100%;
+  height: 100%;
+  display: none;
+  padding: 10px;
+  background: rgb(51, 49, 45);
   text-align: center;
-  background: rgb(242, 242, 242);
-  position: relative;
-  top: 0;
-  display: none;
 }
-#invitationScreen .playerScreen {
-  width: 200px;
+#waitRoom .logo {
+  max-width: 300px;
+  margin: 5% 0px 5% 0px;
+}
+#waitRoom h2 {
+  color: lightgray;
+}
+#waitRoom input {
+  width: 226px;
   height: 50px;
-  margin: 50px auto;
-  display: flex;
-  justify-content: space-between;
+  padding-left: 20px;
+  outline: none;
+  border: 2px solid black;
+  border-radius: 5px;
+  font-size: 16px;
+  font-family: 'Overpass Mono', monospace;
+  background: lightgray;
 }
-#invitationScreen .playerScreen img {
-  width: 50px;
-  height: 50px;
+#waitRoom input:focus {
+  outline: none;
 }
-#launchBtn {
-  display: none;
+#waitRoom button {
+  width: 250px;
+  margin-top: 20px;
 }
 
 /* Canvas */
@@ -105,4 +166,20 @@ button:focus {
   top: 0;
   left: 0;
   z-index: -20;
+}
+
+/* Mobile View */
+@media (max-width: 500px) {
+  h1 {
+    font-size: 48px;
+  }
+
+  h2 {
+    font-size: 12px;
+  }
+
+  /* Wait Room */
+  #waitRoom .logo {
+    max-width: 175px;
+  }
 }

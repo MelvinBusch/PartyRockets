@@ -2,40 +2,64 @@
 <html lang="de">
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <title>PartyRockets</title>
     <link rel="stylesheet" href="style/style.css">
+
     <script src="https://unpkg.com/ionicons@4.2.4/dist/ionicons.js"></script>
     <script src="socket/socket.io-client.js" charset="utf-8"></script>
 
-    <script src="script/classes/Room.js" charset="utf-8"></script>
+    <script src="script/classes/Room.js"   charset="utf-8"></script>
+    <script src="script/classes/Player.js" charset="utf-8"></script>
     <script src="script/classes/Vector.js" charset="utf-8"></script>
-    <script src="script/classes/Smoke.js" charset="utf-8"></script>
+    <script src="script/classes/Smoke.js"  charset="utf-8"></script>
+    <script src="script/classes/Base.js"   charset="utf-8"></script>
+    <script src="script/classes/Moon.js"   charset="utf-8"></script>
+    <script src="script/classes/Star.js"   charset="utf-8"></script>
     <script src="script/classes/Rocket.js" charset="utf-8"></script>
 
     <script src="script/animation.js" charset="utf-8"></script>
     <script src="script/main.js" charset="utf-8"></script>
   </head>
   <body>
+    <!-- Start Page -->
     <section id="startPage">
-      <h1>PartyRockets</h1>
-      <h2>
-        A simple Party Game for small Groups!
-      </h2>
+      <div class="content">
+        <img src="img/rocket-logo.png" alt="Rocket Logo" class="logo">
+        <h2>A simple Party Game for small Groups!</h2>
+      </div>
       <div class="footer">Made with <ion-icon name="heart"></ion-icon> by Melvin Busch</div>
     </section>
-    <section id="invitationScreen">
-      <h2>Scanne den QR Code um dem Spiel beizutreten!</h2>
-      <figure>
-        <img src="" alt="QR-Code" id="qrCode">
-        <figcaption>Oder: <a href="" id="qrAltLink" target="_blank"></a></figcaption>
-      </figure>
-      <div class="playerScreen">
-        <img src="img/icons/rocket-dark.png" alt="Rocket-Dark" class="mini-rocket">
-        <img src="img/icons/rocket-dark.png" alt="Rocket-Dark" class="mini-rocket">
-        <img src="img/icons/rocket-dark.png" alt="Rocket-Dark" class="mini-rocket">
-      </div>
-      <button id="launchBtn">Ready for Takeoff!</button>
+
+    <!-- Join Room -->
+    <section id="joinRoom">
+        <div class="content">
+          <h2>Scanne den QR Code um dem Spiel beizutreten!</h2>
+          <figure>
+            <img src="" alt="QR-Code" id="qrCode">
+            <figcaption>Oder: <a href="" id="qrLink" target="_blank"></a></figcaption>
+          </figure>
+          <div id="players"></div>
+          <button id="launchBtn">Ready for Takeoff!</button>
+        </div>
+        <div class="footer">Made with <ion-icon name="heart"></ion-icon> by Melvin Busch</div>
     </section>
+
+    <!-- Wait Room -->
+    <section id="waitRoom">
+      <div class="content">
+        <img src="img/rocket-logo.png" alt="Rocket Logo" class="logo">
+        <h2>Wait for all players to join the room!</h2>
+        <input type="text" id="nameField" placeholder="Your Name"><br>
+        <button type="button" id="takeoffButton">Ready for takeoff!</button>
+        <div class="error">Sorry, the Room is already full >_<</div>
+      </div>
+      <div class="footer">Made with <ion-icon name="heart"></ion-icon> by Melvin Busch</div>
+    </section>
+
+    <!-- Animation Canvas -->
     <canvas id="canvas"></canvas>
+
   </body>
 </html>
