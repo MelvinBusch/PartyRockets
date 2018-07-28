@@ -9,6 +9,7 @@ let rocket;
 let left = false;
 let center = false;
 let right = false;
+let touched;
 function setup() {
     let canvas = document.getElementById("canvas");
     ctx = canvas.getContext("2d");
@@ -50,6 +51,15 @@ function draw() {
     // Rakete
     rocket.show();
     rocket.update();
+    socket.on("left", () => {
+        rocket.left();
+    });
+    socket.on("center", () => {
+        rocket.center();
+    });
+    socket.on("right", () => {
+        rocket.right();
+    });
     if (left) {
         rocket.left();
     }
@@ -59,8 +69,12 @@ function draw() {
     if (right) {
         rocket.right();
     }
+    if (touched) {
+        socket.emit("fire", engine);
+    }
     window.requestAnimationFrame(draw);
 }
+// For Testing: a, s & d
 function getKeyStates() {
     document.addEventListener("keypress", (_event) => {
         let key = _event.key;
@@ -89,6 +103,18 @@ function getKeyStates() {
                 right = false;
                 break;
         }
+    });
+}
+function touchStates() {
+    // Listen for Player fireing the Engine
+    fireButton.addEventListener("mousedown", (_event) => {
+        touched = true;
+        // socket.emit("fire", engine);
+    });
+    fireButton.addEventListener("touchstart", (_event) => {
+        _event.preventDefault();
+        touched = true;
+        // socket.emit("fire", engine);
     });
 }
 //# sourceMappingURL=animation.js.map

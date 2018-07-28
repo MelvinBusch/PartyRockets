@@ -8,7 +8,7 @@ class Room {
     this.id = this.generateRoomID();
     // this.url = "http://localhost:3001?room=" + this.id;
     this.url = "http://192.168.2.107:3001?room=" + this.id;
-    this.qrSize = 150;
+    this.qrSize = 175;
   }
 
   private generateRoomID(): string {

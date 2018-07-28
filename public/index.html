@@ -4,8 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>PartyRockets</title>
+    <title>Rockets | The Party Game!</title>
     <link rel="stylesheet" href="style/style.css">
+    <link rel="shortcut icon" type="image/x-icon" href="img/favicon/favicon.ico">
 
     <script src="https://unpkg.com/ionicons@4.2.4/dist/ionicons.js"></script>
     <script src="socket/socket.io-client.js" charset="utf-8"></script>
@@ -50,12 +51,21 @@
     <section id="waitRoom">
       <div class="content">
         <img src="img/rocket-logo.png" alt="Rocket Logo" class="logo">
-        <h2>Wait for all players to join the room!</h2>
+        <span id="playerFeedback">Wait for all players to join the room!</span>
         <input type="text" id="nameField" placeholder="Your Name"><br>
         <button type="button" id="takeoffButton">Ready for takeoff!</button>
         <div class="error">Sorry, the Room is already full >_<</div>
       </div>
       <div class="footer">Made with <ion-icon name="heart"></ion-icon> by Melvin Busch</div>
+    </section>
+
+    <!-- Rocket Controll -->
+    <section id="rocketControl">
+      <div class="content">
+        <h2>LEFT Engine</h2>
+        <div id="fireButton"></div>
+        <span>Tap to fire!</span>
+      </div>
     </section>
 
     <!-- Animation Canvas -->

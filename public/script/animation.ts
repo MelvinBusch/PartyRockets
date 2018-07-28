@@ -13,6 +13,8 @@ let left: boolean = false;
 let center: boolean = false;
 let right: boolean = false;
 
+let touched: boolean;
+
 function setup(): void {
   let canvas: HTMLCanvasElement = <HTMLCanvasElement>document.getElementById("canvas");
   ctx = canvas.getContext("2d");
@@ -70,6 +72,16 @@ function draw(): void {
   rocket.show();
   rocket.update();
 
+  socket.on("left", () => {
+    rocket.left();
+  });
+  socket.on("center", () => {
+    rocket.center();
+  });
+  socket.on("right", () => {
+    rocket.right();
+  });
+
   if (left) {
     rocket.left();
   }
@@ -80,9 +92,14 @@ function draw(): void {
     rocket.right();
   }
 
+  if (touched) {
+    socket.emit("fire", engine);
+  }
+
   window.requestAnimationFrame(draw);
 }
 
+// For Testing: a, s & d
 function getKeyStates(): void {
   document.addEventListener("keypress", (_event: KeyboardEvent) => {
     let key: string = _event.key;
@@ -116,5 +133,18 @@ function getKeyStates(): void {
         right = false;
         break;
     }
+  });
+}
+
+function touchStates(): void {
+  // Listen for Player fireing the Engine
+  fireButton.addEventListener("mousedown", (_event: MouseEvent) => {
+    touched = true;
+    // socket.emit("fire", engine);
+  });
+  fireButton.addEventListener("touchstart", (_event: TouchEvent) => {
+    _event.preventDefault();
+    touched = true;
+    // socket.emit("fire", engine);
   });
 }

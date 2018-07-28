@@ -20,32 +20,51 @@ var Server;
                 url: _data.url,
                 playerLimit: 3,
                 players: {},
+                engines: ["left", "center", "right"],
                 socket: _socket.id
             };
             rooms[room.id] = room;
-            console.log(rooms);
         });
         // Get new Player Data and save to according Room
         _socket.on("createPlayer", (_player) => {
             let success = false;
-            console.log("new Player connected!");
-            for (let _key in rooms) {
-                let room = rooms[_key];
-                if (room.id === _player.room && Object.keys(room.players).length <= 2) {
-                    room.players[_player.id] = {
-                        id: _player.id,
-                        name: _player.name,
-                        room: _player.room,
-                        socket: _socket.id,
-                        engine: "center"
-                    };
-                    success = true;
-                }
+            let room = rooms[_player.room];
+            let numPlayers = Object.keys(room.players).length + 1;
+            let engine = "";
+            if (room && numPlayers <= 3) {
+                // Assign Engine to Player
+                engine = room.engines[0];
+                room.engines.splice(0, 1);
+                // Assign Player to Room
+                room.players[_player.id] = {
+                    id: _player.id,
+                    name: _player.name,
+                    room: _player.room,
+                    socket: _socket.id,
+                    engine: engine
+                };
+                success = true;
             }
             // Give Feedback to the User
-            _socket.emit("playerResponse", success);
-            console.log(rooms);
+            _socket.emit("playerResponse", {
+                success: success,
+                id: _player.id,
+                name: _player.name,
+                engine: engine
+            });
+            socket.emit("masterResponse", {
+                success: success,
+                id: _player.id,
+                name: _player.name,
+                engine: engine
+            });
         });
+        // Game Start
+        _socket.on("ready", (_room) => {
+            socket.emit("start", _room);
+        });
+        // Engines
+        _socket.on("fire", (engine) => socket.emit(engine));
         // Handle disconnects
         _socket.on("disconnect", () => {
             let query = Url.parse(_socket.handshake.headers.referer).query;
@@ -57,35 +76,22 @@ var Server;
                         delete rooms[_key];
                     }
                 }
-                console.info("Room closed!");
             }
-            else {
-                // Remove Player from room on disconnect
+            // Remove Player from room on disconnect
+            if (query) {
                 for (let _key in rooms) {
                     let room = rooms[_key];
                     for (let _id in room.players) {
                         let player = room.players[_id];
                         if (player.socket === _socket.id && player != undefined) {
+                            room.engines.push(player.engine);
+                            socket.emit("playerDisconnect", player.id);
                             delete rooms[_key].players[_id];
                         }
                     }
                 }
-                console.info("Player disconnected!");
             }
         });
     });
 })(Server || (Server = {}));
-// User fires Engine
-// 1. Destinate Room
-// 2. Send Data to Room
-// app.get("/", (_request: Express.Request, _response: Express.Response, _next: Express.NextFunction) => {
-//   const query: string = _request.query.room;
-//   if (_request.query.room) {
-//     _response.redirect("player?" + query);
-//     _response.end();
-//   } else {
-//     app.use(Express.static(__dirname + "/public"));
-//   }
-//   _next();
-// });
 //# sourceMappingURL=server.js.map
