@@ -1,21 +1,21 @@
-let ctx;
-let width;
-let height;
-let staticBackground;
-let base;
-let stars;
-let moon;
-let barrels;
-let rocket;
-let left = false;
-let center = false;
-let right = false;
-let countdown;
-let animation;
-let frameCount;
-let game = false;
+var ctx;
+var width;
+var height;
+var staticBackground;
+var base;
+var stars;
+var moon;
+var barrels;
+var rocket;
+var left = false;
+var center = false;
+var right = false;
+var countdown;
+var animation;
+var frameCount;
+var game = false;
 function setup() {
-    let canvas = document.getElementById("canvas");
+    var canvas = document.getElementById("canvas");
     ctx = canvas.getContext("2d");
     frameCount = 1;
     getKeyStates();
@@ -35,33 +35,33 @@ function setup() {
     moon = new Moon(Math.floor(width * .8), Math.floor(height * .3));
     // Sterne
     stars = [];
-    for (let i = 0; i < 100; i++) {
+    for (var i = 0; i < 100; i++) {
         stars.push(new Star());
     }
     // Barrels
     barrels = [];
-    for (let i = 0; i < 2; i++) {
+    for (var i = 0; i < 2; i++) {
         barrels.push(new Barrel());
     }
     countdown = new Countdown(5, width / 2, height / 2);
-    countdown.count(() => game = true);
+    countdown.count(function () { return game = true; });
     draw();
 }
 function draw() {
     ctx.clearRect(0, 0, width, height);
     ctx.putImageData(staticBackground, 0, 0);
     // Evaluate TouchEvents from Socket
-    socket.on("left", (_touched) => {
+    socket.on("left", function (_touched) {
         left = _touched;
     });
-    socket.on("center", (_touched) => {
+    socket.on("center", function (_touched) {
         center = _touched;
     });
-    socket.on("right", (_touched) => {
+    socket.on("right", function (_touched) {
         right = _touched;
     });
     // Sterne
-    stars.forEach((star) => star.show());
+    stars.forEach(function (star) { return star.show(); });
     // Treibstoffanzeige
     ctx.fillStyle = "rgb(98, 170, 189)"; // hellblau
     ctx.fillRect(50, 30, rocket.fuel, 15);
@@ -71,8 +71,8 @@ function draw() {
     // Base
     base.show();
     // Barrels
-    for (let i = barrels.length - 1; i >= 0; i--) {
-        let _barrel = barrels[i];
+    for (var i = barrels.length - 1; i >= 0; i--) {
+        var _barrel = barrels[i];
         _barrel.show();
         if (hitBarrel(_barrel)) {
             rocket.refuel(_barrel.fuel);
@@ -134,8 +134,8 @@ function draw() {
 }
 // For Testing: a, s & d
 function getKeyStates() {
-    document.addEventListener("keypress", (_event) => {
-        let key = _event.key;
+    document.addEventListener("keypress", function (_event) {
+        var key = _event.key;
         switch (key) {
             case "a":
                 left = true;
@@ -148,8 +148,8 @@ function getKeyStates() {
                 break;
         }
     });
-    document.addEventListener("keyup", (_event) => {
-        let key = _event.key;
+    document.addEventListener("keyup", function (_event) {
+        var key = _event.key;
         switch (key) {
             case "a":
                 left = false;
@@ -164,15 +164,15 @@ function getKeyStates() {
     });
 }
 function moonLanding() {
-    let dist = Math.sqrt(Math.pow(moon.pos.x - rocket.pos.x + (rocket.img.width / 2), 2) + Math.pow(moon.pos.y - rocket.pos.y + (rocket.img.height / 2), 2));
+    var dist = Math.sqrt(Math.pow(moon.pos.x - rocket.pos.x + (rocket.img.width / 2), 2) + Math.pow(moon.pos.y - rocket.pos.y + (rocket.img.height / 2), 2));
     return dist < 150;
 }
 function lostInSpace() {
-    let border = 250;
+    var border = 250;
     return rocket.pos.x < -border || rocket.pos.x > width + border || rocket.pos.y < -border || rocket.pos.y > height + border;
 }
 function hitBarrel(_barrel) {
-    let dist = Math.sqrt(Math.pow(_barrel.pos.x - rocket.pos.x + (rocket.img.width / 2), 2) + Math.pow(_barrel.pos.y - rocket.pos.y + (rocket.img.height / 2), 2));
+    var dist = Math.sqrt(Math.pow(_barrel.pos.x - rocket.pos.x + (rocket.img.width / 2), 2) + Math.pow(_barrel.pos.y - rocket.pos.y + (rocket.img.height / 2), 2));
     return dist < 75;
 }
 function noFuel() {

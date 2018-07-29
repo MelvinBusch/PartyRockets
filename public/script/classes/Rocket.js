@@ -1,5 +1,5 @@
-class Rocket {
-    constructor(_x, _y) {
+var Rocket = /** @class */ (function () {
+    function Rocket(_x, _y) {
         this.pos = new Vector(_x, _y);
         this.vel = new Vector(0, -.001);
         this.acc = new Vector(0, 0);
@@ -14,16 +14,16 @@ class Rocket {
         this.img.src = "img/rakete.png";
         this.fuel = 250;
     }
-    show() {
+    Rocket.prototype.show = function () {
         ctx.save();
         ctx.translate(this.pos.x, this.pos.y);
-        let rotation = this.vel.getDirection();
+        var rotation = this.vel.getDirection();
         ctx.scale(.75, .75);
         ctx.rotate(rotation + Math.PI / 2);
         ctx.drawImage(this.img, 0 - this.img.width / 2, 0 - this.img.height);
         ctx.restore();
-    }
-    update() {
+    };
+    Rocket.prototype.update = function () {
         if (this.checkFuel())
             this.fuel = 0;
         this.updateEngines();
@@ -32,36 +32,37 @@ class Rocket {
         this.vel.add(this.acc);
         this.acc.multiply(0);
         this.vel.multiply(.9);
-    }
-    applyForce(_force) {
+    };
+    Rocket.prototype.applyForce = function (_force) {
         this.acc.add(_force);
-    }
-    updateEngines() {
-        let flightDirection = this.vel.getDirection();
+    };
+    Rocket.prototype.updateEngines = function () {
+        var flightDirection = this.vel.getDirection();
         this.engines.left.setDirection(flightDirection + Math.PI / 16);
         this.engines.center.setDirection(flightDirection);
         this.engines.right.setDirection(flightDirection - Math.PI / 16);
-    }
-    gravity() {
+    };
+    Rocket.prototype.gravity = function () {
         this.pos.y += 1.5;
-    }
-    checkFuel() {
+    };
+    Rocket.prototype.checkFuel = function () {
         return this.fuel <= 0;
-    }
-    left() {
+    };
+    Rocket.prototype.left = function () {
         this.applyForce(this.engines.left);
         this.fuel -= .75;
-    }
-    center() {
+    };
+    Rocket.prototype.center = function () {
         this.applyForce(this.engines.center);
         this.fuel -= .75;
-    }
-    right() {
+    };
+    Rocket.prototype.right = function () {
         this.applyForce(this.engines.right);
         this.fuel -= .75;
-    }
-    refuel(_fuel) {
+    };
+    Rocket.prototype.refuel = function (_fuel) {
         this.fuel += _fuel;
-    }
-}
+    };
+    return Rocket;
+}());
 //# sourceMappingURL=Rocket.js.map

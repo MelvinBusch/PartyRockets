@@ -1,54 +1,54 @@
 ///<reference path="../socket/socket.io-client.d.ts" />
 // Connecting to Socket
 // const socketAddress: string = "http://localhost:3000";
-const socketAddress = "http://192.168.2.107:3001";
-const socket = io.connect(socketAddress);
-let room;
-let player;
-let numPlayers = 0;
-let engine = "";
+var socketAddress = "http://192.168.2.107:3001";
+var socket = io.connect(socketAddress);
+var room;
+var player;
+var numPlayers = 0;
+var engine = "";
 // Start Page
-let startPage;
+var startPage;
 // Join Room
-let joinRoom;
-let qrCode;
-let qrLink;
-let players;
-let launchButton;
+var joinRoom;
+var qrCode;
+var qrLink;
+var players;
+var launchButton;
 // Wait Room
-let waitRoom;
-let nameField;
-let takeoffButton;
-let playerFeedback;
-let playerName;
+var waitRoom;
+var nameField;
+var takeoffButton;
+var playerFeedback;
+var playerName;
 // Rocket Controll
-let rocketControl;
-let fireButton;
+var rocketControl;
+var fireButton;
 // End Screen
-let endScreen;
-let messageBox;
-let restartButton;
+var endScreen;
+var messageBox;
+var restartButton;
 window.addEventListener("load", init);
 function init() {
     console.info("Anwendung gestartet!");
     initDOMVariables();
     // Parse URL
-    let pageURL = window.location.search;
-    let query = pageURL.replace("?room=", "");
+    var pageURL = window.location.search;
+    var query = pageURL.replace("?room=", "");
     console.log(window.location.search);
     if (query === "") {
         // Create new Room
         room = new Room();
-        room.fetchQRCode().then((_imgURL) => {
+        room.fetchQRCode().then(function (_imgURL) {
             qrCode.src = _imgURL + "";
             qrLink.innerText = room.url;
             qrLink.href = room.url;
-            setTimeout(() => slidePageUp(startPage), 1500);
+            setTimeout(function () { return slidePageUp(startPage); }, 1500);
         });
         // Tell Server that Room has been created
         socket.emit("createRoom", room.data());
         // Wait for Players to join the Game
-        socket.on("masterResponse", (_response) => {
+        socket.on("masterResponse", function (_response) {
             if (_response.success) {
                 showPlayerCard(_response.id, _response.name, _response.engine);
                 numPlayers++;
@@ -56,29 +56,29 @@ function init() {
             }
         });
         // Handle unexpected disconnect
-        socket.on("playerDisconnect", (_playerID) => {
+        socket.on("playerDisconnect", function (_playerID) {
             document.getElementById(_playerID).remove();
             numPlayers--;
             checkForAllPlayers();
         });
         // Tell Server that all Players are Ready
-        launchButton.addEventListener("click", () => {
+        launchButton.addEventListener("click", function () {
             socket.emit("ready", room.data());
             setup();
         });
         // Start the Game
-        socket.on("start", (_room) => {
+        socket.on("start", function (_room) {
             slidePageUp(joinRoom);
         });
         // Restart Game
-        socket.on("restart", (_message) => {
+        socket.on("restart", function (_message) {
             messageBox.innerText = _message.message;
-            setTimeout(() => {
+            setTimeout(function () {
                 endScreen.style.top = "0";
                 endScreen.style.display = "block";
             }, 1000);
         });
-        restartButton.addEventListener("click", () => {
+        restartButton.addEventListener("click", function () {
             setup();
             slidePageUp(endScreen);
         });
@@ -90,15 +90,15 @@ function init() {
         waitRoom.style.display = "block"; // "block"
         rocketControl.style.display = "block";
         // Wait for Player to enter his Name
-        takeoffButton.addEventListener("click", () => {
+        takeoffButton.addEventListener("click", function () {
             if (nameField.value != "") {
                 playerName = nameField.value;
                 nameField.readOnly = true;
                 nameField.style.boxShadow = "none";
                 takeoffButton.style.display = "none";
                 // Create Player Object and send to Server
-                let player = new Player(query, playerName);
-                socket.emit("createPlayer", player.data());
+                var player_1 = new Player(query, playerName);
+                socket.emit("createPlayer", player_1.data());
             }
             else {
                 // If no Name was entered:
@@ -107,8 +107,8 @@ function init() {
             // socket.on("start", (_response: any) => console.log(_response));
         });
         // Give User Feedback about Connection
-        socket.on("playerResponse", (_response) => {
-            let engineLabel = document.querySelector("#rocketControl .content h2");
+        socket.on("playerResponse", function (_response) {
+            var engineLabel = document.querySelector("#rocketControl .content h2");
             if (_response.success) {
                 playerFeedback.innerText = "You are connected to the Game! Wait for your friends to connect xD";
                 playerFeedback.style.color = "white";
@@ -123,7 +123,7 @@ function init() {
             }
         });
         // Show Rocket Control
-        socket.on("start", () => {
+        socket.on("start", function () {
             slidePageUp(waitRoom);
         });
         // Fire Engine Touch
@@ -160,13 +160,7 @@ function slidePageUp(_page) {
     _page.style.top = -window.innerHeight + "px";
 }
 function showPlayerCard(_id, _name, _engine) {
-    players.innerHTML += `
-    <div class="player" id="${_id}">
-      <img src="img/rocket-color.png" alt="Rocket-Color" class="mini-rocket">
-      <div class="playerName">${_name}</div>
-      <div class="playerControl">${_engine.toUpperCase()} Engine</div>
-    </div>
-  `;
+    players.innerHTML += "\n    <div class=\"player\" id=\"" + _id + "\">\n      <img src=\"img/rocket-color.png\" alt=\"Rocket-Color\" class=\"mini-rocket\">\n      <div class=\"playerName\">" + _name + "</div>\n      <div class=\"playerControl\">" + _engine.toUpperCase() + " Engine</div>\n    </div>\n  ";
 }
 function checkForAllPlayers() {
     if (numPlayers >= 1) {
