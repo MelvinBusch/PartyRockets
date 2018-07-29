@@ -36,8 +36,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 var Room = /** @class */ (function () {
     function Room() {
         this.id = this.generateRoomID();
-        // this.url = "http://localhost:3001?room=" + this.id;
-        this.url = "http://192.168.2.107:3001?room=" + this.id;
+        // this.url = "http://192.168.2.107:3001?room=" + this.id;
+        this.url = "https://eia-melvin.herokuapp.com?room=" + this.id;
         this.qrSize = 175;
     }
     Room.prototype.generateRoomID = function () {

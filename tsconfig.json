@@ -4,7 +4,7 @@
     "moduleResolution": "Classic",
     "types": ["node"],
     "sourceMap": true,
-    "target": "ES5"
+    "target": "ES5",
   },
   "compileOnSave": true
 }

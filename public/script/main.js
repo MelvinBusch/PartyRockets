@@ -1,7 +1,6 @@
 ///<reference path="../socket/socket.io-client.d.ts" />
 // Connecting to Socket
-// const socketAddress: string = "http://localhost:3000";
-var socketAddress = "http://192.168.2.107:3001";
+var socketAddress = "https://eia-melvin.herokuapp.com/";
 var socket = io.connect(socketAddress);
 var room;
 var player;
