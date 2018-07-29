@@ -63,8 +63,12 @@ var Server;
         _socket.on("ready", (_room) => {
             socket.emit("start", _room);
         });
-        // Engines
-        _socket.on("fire", (engine) => socket.emit(engine));
+        // Rocket Control
+        _socket.on("fire", (_player) => {
+            socket.emit(_player.engine, _player.touched);
+        });
+        // Game Over
+        _socket.on("gameOver", (_message) => socket.emit("restart", _message));
         // Handle disconnects
         _socket.on("disconnect", () => {
             let query = Url.parse(_socket.handshake.headers.referer).query;

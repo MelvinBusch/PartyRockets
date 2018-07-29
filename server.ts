@@ -75,8 +75,13 @@ namespace Server {
       socket.emit("start", _room);
     });
 
-    // Engines
-    _socket.on("fire", (engine: string) => socket.emit(engine));
+    // Rocket Control
+    _socket.on("fire", (_player: any) => {
+      socket.emit(_player.engine, _player.touched);
+    });
+
+    // Game Over
+    _socket.on("gameOver", (_message: any) => socket.emit("restart", _message));
 
     // Handle disconnects
     _socket.on("disconnect", () => {

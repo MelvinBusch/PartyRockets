@@ -31,6 +31,11 @@ let playerName: string;
 let rocketControl: HTMLElement;
 let fireButton: HTMLElement;
 
+// End Screen
+let endScreen: HTMLElement;
+let messageBox: HTMLHeadingElement;
+let restartButton: HTMLButtonElement;
+
 window.addEventListener("load", init);
 
 function init(): void {
@@ -41,6 +46,7 @@ function init(): void {
   // Parse URL
   let pageURL: string = window.location.search;
   let query: string = pageURL.replace("?room=", "");
+  console.log(window.location.search);
 
   if (query === "") {
 
@@ -79,13 +85,22 @@ function init(): void {
     });
 
     // Start the Game
-    // let countdown: Countdown = new Countdown(5);
     socket.on("start", (_room) => {
       slidePageUp(joinRoom);
-      // countdown.count();
     });
 
-
+    // Restart Game
+    socket.on("restart", (_message: any) => {
+      messageBox.innerText = _message.message
+      setTimeout(() => {
+        endScreen.style.top = "0";
+        endScreen.style.display = "block";
+      }, 1000);
+    });
+    restartButton.addEventListener("click", () => {
+      setup();
+      slidePageUp(endScreen);
+    });
 
   } else {
 
@@ -111,15 +126,17 @@ function init(): void {
         // If no Name was entered:
         nameField.style.boxShadow = "0px 0px 0px 2px rgb(167, 49, 66)";
       }
-      socket.on("start", (_response: any) => console.log(_response));
+      // socket.on("start", (_response: any) => console.log(_response));
     });
 
     // Give User Feedback about Connection
     socket.on("playerResponse", (_response: any) => {
+      let engineLabel: HTMLElement = document.querySelector("#rocketControl .content h2");
       if (_response.success) {
         playerFeedback.innerText = "You are connected to the Game! Wait for your friends to connect xD";
         playerFeedback.style.color = "white";
         engine = _response.engine;
+        engineLabel.innerText = engine.toUpperCase() + " Engine";
       } else {
         playerFeedback.innerText = "Sorry, there went something wrong connecting to the Game >_<";
         playerFeedback.style.color = "white";
@@ -132,6 +149,14 @@ function init(): void {
     socket.on("start", () => {
       slidePageUp(waitRoom);
     });
+
+    // Fire Engine Touch
+    fireButton.addEventListener("touchstart", onFire);
+    fireButton.addEventListener("touchend", offFire);
+
+    // Fire Engine Click
+    fireButton.addEventListener("mousedown", onFire);
+    fireButton.addEventListener("mouseup", offFire);
   }
 }
 
@@ -155,6 +180,11 @@ function initDOMVariables(): void {
   // Rocket Controll
   rocketControl = document.getElementById("rocketControl");
   fireButton = document.getElementById("fireButton");
+
+  // End Screen
+  endScreen = document.getElementById("endScreen");
+  messageBox = document.querySelector("#endScreen .content h2");
+  restartButton = <HTMLButtonElement>document.getElementById("restart");
 }
 
 function slidePageUp(_page: HTMLElement): void {
@@ -164,7 +194,7 @@ function slidePageUp(_page: HTMLElement): void {
 function showPlayerCard(_id: string, _name: string, _engine: string): void {
   players.innerHTML += `
     <div class="player" id="${_id}">
-      <img src="img/icons/rocket-color.png" alt="Rocket-Color" class="mini-rocket">
+      <img src="img/rocket-color.png" alt="Rocket-Color" class="mini-rocket">
       <div class="playerName">${_name}</div>
       <div class="playerControl">${_engine.toUpperCase()} Engine</div>
     </div>
@@ -177,4 +207,20 @@ function checkForAllPlayers(): void {
   } else {
     launchButton.style.display = "none";
   }
+}
+
+function onFire(_event: Event): void {
+  _event.preventDefault();
+  socket.emit("fire", {
+    engine: engine,
+    touched: true
+  });
+}
+
+function offFire(_event: Event): void {
+  _event.preventDefault();
+  socket.emit("fire", {
+    engine: engine,
+    touched: false
+  });
 }

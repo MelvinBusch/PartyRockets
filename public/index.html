@@ -11,14 +11,16 @@
     <script src="https://unpkg.com/ionicons@4.2.4/dist/ionicons.js"></script>
     <script src="socket/socket.io-client.js" charset="utf-8"></script>
 
-    <script src="script/classes/Room.js"   charset="utf-8"></script>
+    <script src="script/classes/Room.js" charset="utf-8"></script>
     <script src="script/classes/Player.js" charset="utf-8"></script>
     <script src="script/classes/Vector.js" charset="utf-8"></script>
-    <script src="script/classes/Smoke.js"  charset="utf-8"></script>
-    <script src="script/classes/Base.js"   charset="utf-8"></script>
-    <script src="script/classes/Moon.js"   charset="utf-8"></script>
-    <script src="script/classes/Star.js"   charset="utf-8"></script>
+    <script src="script/classes/Smoke.js" charset="utf-8"></script>
+    <script src="script/classes/Base.js" charset="utf-8"></script>
+    <script src="script/classes/Moon.js" charset="utf-8"></script>
+    <script src="script/classes/Star.js" charset="utf-8"></script>
     <script src="script/classes/Rocket.js" charset="utf-8"></script>
+    <script src="script/classes/Countdown.js" charset="utf-8"></script>
+    <script src="script/classes/Barrel.js" charset="utf-8"></script>
 
     <script src="script/animation.js" charset="utf-8"></script>
     <script src="script/main.js" charset="utf-8"></script>
@@ -62,9 +64,17 @@
     <!-- Rocket Controll -->
     <section id="rocketControl">
       <div class="content">
-        <h2>LEFT Engine</h2>
+        <h2></h2>
         <div id="fireButton"></div>
         <span>Tap to fire!</span>
+      </div>
+    </section>
+
+    <!-- End Screen -->
+    <section id="endScreen">
+      <div class="content">
+        <h2></h2>
+        <button id="restart">Play Again!</button>
       </div>
     </section>
 

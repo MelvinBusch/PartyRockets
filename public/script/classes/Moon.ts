@@ -1,7 +1,7 @@
 class Moon {
 
-  private pos: Vector;
-  private img: HTMLImageElement;
+  public pos: Vector;
+  public img: HTMLImageElement;
 
   constructor(_x: number, _y: number) {
     this.pos = new Vector(_x, _y);
