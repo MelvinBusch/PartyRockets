@@ -29,7 +29,8 @@ var messageBox;
 var restartButton;
 window.addEventListener("load", init);
 function init() {
-    console.info("Anwendung gestartet!");
+    console.log("Anwendung gestartet!");
+    console.info("Hallo Herr Dell'Oro,\num den Test der Anwendung und die Korrektur etwas zu vereinfachen, ist es schon ab einem beigetretenen Spieler möglich das Spiel zu starten (normal wären: drei).\nEbenso lässt sich die Rakete über die Tasten a,s und d steuern\nViele Grüße,\nMelvin");
     initDOMVariables();
     // Parse URL
     var pageURL = window.location.search;
